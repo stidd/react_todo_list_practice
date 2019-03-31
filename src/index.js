@@ -16,6 +16,19 @@ function UserFormInput(props) {
   );
 }
 
+function MakeList(props) {
+  let fullList = props.todos.map((item, i) => {
+    return (
+      <li key={i}>
+        {item}
+        <button onClick={() => props.handleDelete(i)}>X</button>
+      </li>
+    );
+  });
+
+  return <ul>{fullList}</ul>;
+}
+
 class App extends Component {
   state = {
     todos: [],
@@ -23,7 +36,6 @@ class App extends Component {
   };
 
   handleToDo = e => {
-    // console.log(e.target.value);
     this.setState({
       currentTodo: e.target.value
     });
@@ -40,11 +52,15 @@ class App extends Component {
     });
   };
 
-  render() {
-    let fullList = this.state.todos.map((item, i) => {
-      return <li key={i}>{item}</li>;
+  handleDelete = i => {
+    let copyTodos = this.state.todos.slice();
+    copyTodos.splice(i, 1);
+    this.setState({
+      todos: copyTodos
     });
+  };
 
+  render() {
     return (
       <div>
         <UserFormInput
@@ -52,7 +68,7 @@ class App extends Component {
           todo={this.handleToDo}
           currenttodo={this.state.currentTodo}
         />
-        {this.state.todos.length === 0 ? "nottta" : <ul>{fullList}</ul>}
+        <MakeList todos={this.state.todos} handleDelete={this.handleDelete} />
       </div>
     );
   }
