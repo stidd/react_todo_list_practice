@@ -8,6 +8,7 @@ function UserFormInput(props) {
       <input
         type="text"
         placeholder="type your today here"
+        value={props.currenttodo}
         onChange={props.todo}
       />
       <button>Submit</button>
@@ -22,7 +23,7 @@ class App extends Component {
   };
 
   handleToDo = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({
       currentTodo: e.target.value
     });
@@ -32,18 +33,26 @@ class App extends Component {
     e.preventDefault();
 
     let todosCopy = this.state.todos.slice();
-    let newTodo = todosCopy.push(this.state.currentTodo);
+    todosCopy.push(this.state.currentTodo);
     this.setState({
-      todos: newTodo,
-      currentTodo: " "
+      todos: todosCopy,
+      currentTodo: ""
     });
   };
 
   render() {
+    let fullList = this.state.todos.map((item, i) => {
+      return <li key={i}>{item}</li>;
+    });
+
     return (
       <div>
-        <UserFormInput submit={this.handleSubmit} todo={this.handleToDo} />
-        {this.state.todos.length === 0 ? "notta" : "something"}
+        <UserFormInput
+          submit={this.handleSubmit}
+          todo={this.handleToDo}
+          currenttodo={this.state.currentTodo}
+        />
+        {this.state.todos.length === 0 ? "nottta" : <ul>{fullList}</ul>}
       </div>
     );
   }
