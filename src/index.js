@@ -7,11 +7,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>hey</h1>
+        <h3>Keep Track of Your Daily Tasks Here</h3>
+        <form type="submit">
+          <input type="text" placeholder="type your today here" />
+          <button>Submit</button>
+        </form>
       </div>
     );
   }
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<App />, document.getElementById("root"));
